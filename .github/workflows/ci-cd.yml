@@ -1,0 +1,49 @@
+name: Test and Deploy to Vercel
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test_and_deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout the code
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # Step 2: Set up Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '18'  # Adjust as necessary for your project
+
+      # Step 3: Install dependencies
+      - name: Install dependencies
+        run: npm install
+
+      # Step 4: Run tests
+      - name: Run tests
+        run: npm test
+
+      # Step 5: Exit if tests fail
+      - name: Exit on test failure
+        if: failure()
+        run: exit 1
+
+      # Vercel CLI setup
+      - name: Vercel CLI setup
+        run: |
+          npm install -g vercel
+
+      # Deploy to Vercel if tests pass
+      - name: Deploy to Vercel
+        env:
+          VERCEL_TOKEN_BACKEND: ${{ secrets.VERCEL_TOKEN_BACKEND }}  # Your Vercel token
+        run: |
+          vercel --prod --token $VERCEL_TOKEN_BACKEND --yes
