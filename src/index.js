@@ -17,6 +17,7 @@ const allowedOrigins = process.env.NODE_ENV === "production"
 ? process.env.FRONTEND_URL_PROD  // ✅ Production frontend
 : process.env.FRONTEND_URL_DEV; 
 
+console.log(allowedOrigins);
 app.use(cors({ origin: allowedOrigins, credentials: true }));
 
 
