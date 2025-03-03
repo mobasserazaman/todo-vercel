@@ -8,7 +8,7 @@ const connectDB = async () => {
         const MONGODB_URI = process.env.MONGODB_URI;
         if(MONGODB_URI)  console.log(`Mongo db uri : ${MONGODB_URI}`);
         else console.log("NO URI FOUND")
-        await mongoose.connect("mongodb+srv://mobassera:mobassera@cluster0.b8ozt.mongodb.net/test?retryWrites=true&w=majority&appName=Cluster0");
+        await mongoose.connect(process.env.MONGODB_URI);
     }catch(error){
         console.log("MongoDB connection failed: ", error);
         process.exit(1);
