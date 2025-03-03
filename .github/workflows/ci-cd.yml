@@ -44,6 +44,10 @@ jobs:
       # Deploy to Vercel if tests pass
       - name: Deploy to Vercel
         env:
+          NODE_ENV: "production"
+          FRONTEND_URL_PROD: "https://todo-frontend-vite.vercel.app"
+          MONGODB_URI: ${{ secrets.MONGODB_URI }}
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
           VERCEL_TOKEN_BACKEND: ${{ secrets.VERCEL_TOKEN_BACKEND }}  # Your Vercel token
         run: |
           vercel --prod --token $VERCEL_TOKEN_BACKEND --yes
