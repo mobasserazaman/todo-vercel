@@ -29,6 +29,8 @@ jobs:
 
       # Step 4: Run tests
       - name: Run tests
+        env:
+         JWT_SECRET: ${{ secrets.JWT_SECRET }}
         run: npm test
 
       # Step 5: Exit if tests fail
